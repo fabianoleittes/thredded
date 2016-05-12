@@ -11,7 +11,7 @@ module Thredded
       authorize_creating post
       post.save!
 
-      redirect_to post_path(post)
+      redirect_to post_path(post, user: thredded_current_user)
     end
 
     def edit
@@ -22,7 +22,7 @@ module Thredded
       authorize post, :update?
       post.update_attributes(post_params.except(:user, :ip))
 
-      redirect_to post_path(post)
+      redirect_to post_path(post, user: thredded_current_user)
     end
 
     def destroy

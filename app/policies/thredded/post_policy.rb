@@ -14,7 +14,7 @@ module Thredded
     end
 
     def read?
-      TopicPolicy.new(@user, @post.postable).read?
+      TopicPolicy.new(@user, @post.postable).read? && @post.visible_to_user?(@user)
     end
 
     def update?

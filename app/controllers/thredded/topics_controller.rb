@@ -13,6 +13,7 @@ module Thredded
       @topics = Thredded::TopicsPageView.new(
         thredded_current_user,
         messageboard.topics
+          .visible_to_user(thredded_current_user)
           .order_sticky_first.order_recently_updated_first
           .includes(:categories, :last_user, :user)
           .page(current_page)
@@ -25,6 +26,7 @@ module Thredded
     def show
       authorize topic, :read?
       page_scope = topic.posts
+        .visible_to_user(thredded_current_user)
         .includes(:user, :messageboard, :postable)
         .order_oldest_first
         .page(current_page)
@@ -45,6 +47,7 @@ module Thredded
       @topics = Thredded::TopicsPageView.new(
         thredded_current_user,
         topics_scope
+          .visible_to_user(thredded_current_user)
           .search_query(@query)
           .order_recently_updated_first
           .includes(:categories, :last_user, :user)

@@ -14,7 +14,7 @@ module Thredded
     end
 
     def read?
-      @messageboard_user_permission.read?
+      @messageboard_user_permission.read? && @topic.visible_to_user?(@user)
     end
 
     def update?
